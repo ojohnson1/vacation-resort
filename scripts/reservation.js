@@ -16,31 +16,34 @@ function getRoomRate(checkInDate, queenBedRoom, kingBedRoom, twoBedRoom) {
    kingBedRoom = document.getElementById("kingBedRoom").checked;
    twoBedRoom = document.getElementById("twoBedRoom").checked;
    checkInDate = new Date (document.getElementById ("checkInDate"));
+   let numberOfNightsField=document.getElementById('numberOfNights');
    
-    let roomRate=0;
-   let month=checkInDate.getMonth().value;
-
-//getting the month 
- 
-
-
+   let roomRate;
   
-   if (5<=month <=7  && queenBedRoom ||  kingBedRoom) {
+//getting the month 
+    let month=checkInDate.getMonth().value;
+
+// these if statements determine the in/out of season rates being applied 
+ if (5<=month <=7  && queenBedRoom ||  kingBedRoom) {
      roomRate = 250
   } else if ((queenBedRoom || kingBedRoom)) {
      roomRate = 150
    }
 
-   if (twoBedRoom) {
+   if (5<=month <=7 && twoBedRoom) {
      roomRate = 350
    } else if (twoBedRoom) {
      roomRate = 210
    }
 
+  
+
     //Output Fields
-    let outputOriginalRoomCost=document.getElementById("originalRoomCost");
+  let outputOriginalRoomCost=document.getElementById("originalRoomCost");
+  let numberOfNights=Number(numberOfNightsField.value);
   //Display Output
-  outputOriginalRoomCost.value=roomRate;
+  let originalRoomCost= roomRate*numberOfNights;
+ outputOriginalRoomCost.value=originalRoomCost;
  
  
    
