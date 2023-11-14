@@ -76,16 +76,16 @@
 
 
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="option" id="queenBedRoom" value="option1">
-              <label class="form-check-label" for="noCheckbox1">Queen </label>
+              <input class="form-check-input" type="radio" name="option" id="queenBedRoom" value="option1" required>
+              <label class="form-check-label" for="queenBedRoom">Queen </label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="option" id="kingBedRoom" value="option2">
-              <label class="form-check-label" for="yesCheckbox2">King </label>
+              <input class="form-check-input" type="radio" name="option" id="kingBedRoom" value="option2" required>
+              <label class="form-check-label" for="kingBedRoom">King </label>
             </div>
 
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="option" id="twoBedRoom" value="option2">
+              <input class="form-check-input" type="radio" name="option" id="twoBedRoom" value="option2" required>
               <label class="form-check-label" for="yesCheckbox2"> 2 Bedroom Suites </label>
             </div>
 
@@ -101,22 +101,22 @@
             </div>
 
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="option2" id="noDiscount" value="option1">
+              <input class="form-check-input" type="radio" name="option2" id="noDiscount" value="option1" required>
               <label class="form-check-label" for="noCheckbox1">None</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="option2" id="aaaDiscount" value="option2">
+              <input class="form-check-input" type="radio" name="option2" id="aaaDiscount" value="option2" required>
               <label class="form-check-label" for="yesCheckbox2"> AAA Discount </label>
             </div>
 
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="option2" id="militaryDiscount" value="option2">
+              <input class="form-check-input" type="radio" name="option2" id="militaryDiscount" value="option2" required>
               <label class="form-check-label" for="yesCheckbox2"> Military Discount </label>
             </div>
             <div>
             <input type="submit" class="btn btn-primary m-3" id="btnBook" value="Book Your Stay!">
           </div>
-          <div id="messageDiv"><p></p></div>
+          <p id="messageDiv"></p>
             <div class="mb-3">
               <label for="originalRoomCost" class="form-label"> Room Cost: </label>
               <input type="text" class="form-control" id="originalRoomCost" readonly>
