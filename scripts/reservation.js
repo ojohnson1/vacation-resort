@@ -19,12 +19,27 @@ function OnBtnBook(event){
   const queenBedRoom = document.getElementById("queenBedRoom").checked;
   const kingBedRoom = document.getElementById("kingBedRoom").checked;
   const twoBedRoom = document.getElementById("twoBedRoom").checked;
+
+  let selectedRoomType;
+  
+  if(queenBedRoom){
+    selectedRoomType = "queen";
+  }
+  if(kingBedRoom){
+    selectedRoomType = "king";
+  }
+  if(twoBedRoom){
+    selectedRoomType = "two";
+  }
+
+
+
   const checkInDate = new Date (document.getElementById ("checkInDate").value);
   const inputNumberofNights= document.getElementById('numberOfNights').value;
   const inputNoDiscount=document.getElementById("noDiscount").checked;
   const inputNumberOfAdults=document.getElementById("numberOfAdults").value;
   const inputNumberOfChildren=document.getElementById("numberOfChildren").value;
-  const messageDiv = document.getElementById("messageDiv");
+  
 
  //Output fields
   let outputDiscountedRoomCost=document.getElementById('discountedRoomCost');
@@ -35,18 +50,32 @@ function OnBtnBook(event){
 //Starting Values
    let numberofNights= Number (inputNumberofNights)
    let taxRate=.12
-//Unknown values
+   
+  //Occupancy
+let numberOfAdults = Number(inputNumberOfAdults);
+ let numberOfChildren = Number(inputNumberOfChildren.value);
+ let numberOfPeople = numberOfAdults + numberOfChildren
+ let tooManypeople = checkOccupancyNotAllowed(numberOfPeople, kingBedRoom, twoBedRoom, queenBedRoom);
+ 
+ const messageDiv = document.getElementById("messageDiv");
+ 
+ if (tooManypeople){
+  messageDiv.textContent = "Too many people!";
+  return;
+ }
 
+ messageDiv.textContent = "";
+ 
+ 
+
+ //Unknown values
 let roomRate= getRoomRate(checkInDate,kingBedRoom,twoBedRoom,queenBedRoom);
  let originalRoomCost=roomRate*numberofNights
  let { discountedRoomCost, discount } = getDiscount(originalRoomCost, inputAAADiscount, inputMilitaryDiscount,inputNoDiscount);
  let taxApplied= getTax(taxRate,originalRoomCost,discountedRoomCost);
  let totalCostofRoom= originalRoomCost+taxApplied-discount;
 
- //let numberOfAdults= Number(inputNumberOfAdults);
-// let numberOfChildren= Number(inputNumberOfChildren.value);
-// let occupancy=numberOfAdults + numberOfChildren
-//  getOccupancy();
+ 
  
  //Display Output
  outputOriginalRoomCost.value= originalRoomCost.toFixed (2);
@@ -57,20 +86,39 @@ let roomRate= getRoomRate(checkInDate,kingBedRoom,twoBedRoom,queenBedRoom);
  
 }
 
-//function getOccupancy(occupancy){
-// if( occupancy > 6 && queenBedRoom){
- // messageDiv.innerHTML="This room can only hold 5 people "
+//will return true if too many people are in room.
+function checkOccupancyNotAllowed(numOfPeople, kingBedRoom, twoBedRoom, queenBedRoom){
+    if(kingBedRoom){
+      return ( numOfPeople > 2);
+    }
+    else if(twoBedRoom){
+      return (numOfPeople > 6)
+    }
+    else if (queenBedRoom){
+      return (numOfPeople > 5)
+    }
+}
 
 
-//else if(occupancy > 7 && twoBedRoom){
-//  messageDiv.innerHTML="The room can only hold 6 people"
+function maxOccupancy(occupancy){
 
+  // if (occupancy > 5 && queenBedRoom){
+  //   messageDiv.innerText = 
+  //   "The room you selected will not hold your party".
+  // }
 
-//else if (occupancy > 3 && kingBedRoom){
-// messageDiv.innerHTML="The room can only hold 2 people"
+  // if (occupancy > 2 && kingBedRoom){
+  //   messageDiv.innerText = 
+  //   "The room you selected will not hold your party".
+  // }
 
-
-
+  // if (occupancy > 6 && twoBedRoom){
+  //   messageDiv.innerText = 
+  //   "The room you selected will not hold your party".
+  // }
+ 
+  
+}
 
 
 
@@ -116,7 +164,7 @@ function getDiscount(originalRoomCost,inputAAADiscount,inputMilitaryDiscount, in
 
 
 
-function getRoomRate(checkInDate,kingBedRoom,twoBedRoom,queenBedRoom) {
+function getRoomRate(checkInDate,kingBedRoom,twoBedRoom,queenBedRoom,) {
   //Get the starting values
   
 
@@ -132,13 +180,15 @@ if( summerSeason){
  if(queenBedRoom || kingBedRoom)
   {
     roomRate=250;
+
+   
   }
   else if (twoBedRoom){
  roomRate=350
+
+    
   }
-  else{
-    console.log("Error, type of bed not detected");
-  }
+ 
 
 }
 else {
@@ -146,16 +196,15 @@ else {
   if(queenBedRoom || kingBedRoom)
   {
      roomRate=150
+    
   }
   else if (twoBedRoom){
    roomRate=210
+   
   }
-  else{
-    console.log("Error, type of bed not detected");
-  }
+ 
 
 }
-
 return roomRate;
   
 
